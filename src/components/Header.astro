@@ -12,7 +12,6 @@ const navItems = [
 const { pathname } = Astro.url;
 
 // A helper function to check if a link is active.
-// It handles the special case for the homepage.
 const isActive = (href: string) => {
   if (href === '/') {
     return pathname === '/';
@@ -24,9 +23,12 @@ const isActive = (href: string) => {
 <header class="bg-white sticky top-0 z-50 border-b border-gray-200">
   <div class="max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex justify-between items-center h-20">
-      <!-- Logo and Brand Name -->
-      <a href="/" class="flex items-center space-x-3 group">
-        <!-- Using the actual logo image from your public folder -->
+      <!-- Logo ONLY -->
+      <a href="/" class="flex-shrink-0" aria-label="Maxsys International Homepage">
+        <!-- 
+          The logo image from your public folder.
+          The `alt` text is crucial for accessibility but will NOT be visible on the screen.
+        -->
         <img 
           src="/maxsys-logo.png" 
           alt="Maxsys International Logo" 
@@ -34,11 +36,6 @@ const isActive = (href: string) => {
           width="130"
           height="40"
         />
-        <!-- The styled text next to the logo -->
-        <div class="flex flex-col">
-          <span class="text-2xl font-bold text-gray-900 leading-tight">Maxsys</span>
-          <span class="text-sm text-gray-500 leading-tight tracking-wide">International</span>
-        </div>
       </a>
 
       <!-- Desktop Navigation -->
@@ -108,6 +105,9 @@ const isActive = (href: string) => {
         <a href="https://hub.maxsys.org/wp-login.php" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:bg-gray-50 block px-3 py-3 rounded-lg text-base font-medium">Hub Portal Login</a>
         <a href="https://hrm.maxsys.org/wp-login.php" target="_blank" rel="noopener noreferrer" class="text-gray-700 hover:bg-gray-50 block px-3 py-3 rounded-lg text-base font-medium">HRM Portal Login</a>
       </div>
+      <div class="pt-4 mt-3">
+        <a href="/donate" class="bg-blue-600 text-white block w-full text-center px-4 py-3 rounded-lg text-base font-semibold hover:bg-blue-700">Donate Now</a>
+      </div>
     </div>
   </div>
 </header>
@@ -118,13 +118,13 @@ const isActive = (href: string) => {
     const menu = document.getElementById(menuId);
     if (!button || !menu) return;
 
-    const openIcon = button.querySelector<HTMLElement>('#menu-open-icon');
-    const closeIcon = button.querySelector<HTMLElement>('#menu-close-icon');
+    const openIcon = document.getElementById('menu-open-icon');
+    const closeIcon = document.getElementById('menu-close-icon');
 
     const toggleMenu = (show: boolean) => {
       menu.classList.toggle('hidden', !show);
       button.setAttribute('aria-expanded', String(show));
-      if (openIcon && closeIcon) {
+      if (openIcon && closeIcon && buttonId.includes('mobile')) {
         openIcon.classList.toggle('hidden', show);
         closeIcon.classList.toggle('hidden', !show);
       }
@@ -137,8 +137,8 @@ const isActive = (href: string) => {
     });
 
     if (menuId.includes('login')) {
-      document.addEventListener('click', (event) => {
-        if (!menu.classList.contains('hidden') && !button.contains(event.target as Node)) {
+      document.addEventListener('click', () => {
+        if (!menu.classList.contains('hidden')) {
           toggleMenu(false);
         }
       });
