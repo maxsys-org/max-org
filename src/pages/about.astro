@@ -2,101 +2,264 @@
 import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import DonationBanner from '../components/DonationBanner.astro';
 ---
 
-<Layout title="About Us - MAXSYS.ORG" description="Learn about the mission, values, and team behind MAXSYS.ORG, a Tech For Good initiative by Maxsys International.">
+<Layout title="About Us - Maxsys International" description="Learn about Maxsys International's mission to build hyperlocal tech ecosystems that connect skilled freelancers with communities in need.">
   <Header />
   <main>
+    <!-- Hero Section -->
     <section class="py-20 bg-gradient-to-br from-primary-50 to-secondary-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
-          Technology with a <span class="text-primary-600">Purpose</span>
-        </h1>
-        <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-          We believe technology should serve communities, not the other way around. Our mission is to build hyperlocal tech ecosystems that connect skilled professionals with nonprofits and organizations in need.
-        </p>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center">
+          <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-6">
+            About <span class="text-primary-600">Maxsys International</span>
+          </h1>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            We're building hyperlocal tech ecosystems that connect skilled freelancers with communities in need. 
+            Technology should serve communities, not the other way around.
+          </p>
+        </div>
       </div>
     </section>
 
+    <!-- Mission Statement -->
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Our Mission</h2>
+            <p class="text-lg text-gray-600 mb-6">
+              At Maxsys International, we believe that every community deserves access to skilled, trustworthy technology support. 
+              We're not just connecting freelancers with clients—we're rebuilding the human infrastructure that makes technology 
+              actually useful for regular people.
+            </p>
+            <p class="text-lg text-gray-600 mb-8">
+              Our network of local Tech Hubs operates at the intersection of community service, local empowerment, and technology 
+              infrastructure, helping underutilized talent serve their neighborhoods while earning fair wages.
+            </p>
+            <div class="bg-primary-50 p-6 rounded-xl">
+              <h3 class="text-xl font-semibold text-primary-800 mb-3">Our Core Values</h3>
+              <ul class="space-y-2 text-primary-700">
+                <li class="flex items-center">
+                  <svg class="w-5 h-5 text-primary-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Community-first approach to technology
+                </li>
+                <li class="flex items-center">
+                  <svg class="w-5 h-5 text-primary-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Local economic empowerment
+                </li>
+                <li class="flex items-center">
+                  <svg class="w-5 h-5 text-primary-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Sustainable technology practices
+                </li>
+                <li class="flex items-center">
+                  <svg class="w-5 h-5 text-primary-600 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                  </svg>
+                  Trust through transparency
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="grid grid-cols-2 gap-4">
+            <img 
+              src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop"
+              alt="Community collaboration"
+              class="rounded-2xl shadow-lg"
+            />
+            <img 
+              src="https://images.pexels.com/photos/5256816/pexels-photo-5256816.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop"
+              alt="Technology helping people"
+              class="rounded-2xl shadow-lg mt-8"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Our Story</h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Born from the recognition that communities deserve better than Silicon Valley's extractive tech model.
+          </p>
+        </div>
+
+        <div class="space-y-16">
+          <!-- Timeline Item -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            <div class="lg:col-span-2">
+              <div class="bg-primary-100 text-primary-600 inline-block px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                The Problem
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">Communities Left Behind</h3>
+              <p class="text-gray-600 mb-4">
+                While tech giants laid off thousands of skilled professionals, communities struggled with basic technology needs. 
+                Nonprofits couldn't afford enterprise IT support, seniors fell victim to online scams, and local businesses 
+                couldn't get reliable tech help without traveling hours or paying premium rates.
+              </p>
+              <p class="text-gray-600">
+                Meanwhile, 6.9 million tons of e-waste piled up annually because no local infrastructure existed to 
+                properly recycle or refurbish electronics.
+              </p>
+            </div>
+            <div class="lg:col-span-1">
+              <img 
+                src="https://images.pexels.com/photos/5668858/pexels-photo-5668858.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop"
+                alt="Community challenges"
+                class="rounded-2xl shadow-lg"
+              />
+            </div>
+          </div>
+
+          <!-- Timeline Item -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            <div class="lg:col-span-1 order-2 lg:order-1">
+              <img 
+                src="https://images.pexels.com/photos/3184160/pexels-photo-3184160.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop"
+                alt="The solution"
+                class="rounded-2xl shadow-lg"
+              />
+            </div>
+            <div class="lg:col-span-2 order-1 lg:order-2">
+              <div class="bg-secondary-100 text-secondary-600 inline-block px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                The Insight
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">Local-First Technology</h3>
+              <p class="text-gray-600 mb-4">
+                We realized that the best tech support comes from people who live in your community—who shop at your 
+                grocery store, understand your local challenges, and have a reputation to maintain with their neighbors.
+              </p>
+              <p class="text-gray-600">
+                By connecting skilled professionals with local organizations through trusted Tech Hubs, we could create 
+                sustainable income for tech workers while providing communities with affordable, reliable support.
+              </p>
+            </div>
+          </div>
+
+          <!-- Timeline Item -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+            <div class="lg:col-span-2">
+              <div class="bg-accent-100 text-accent-600 inline-block px-4 py-2 rounded-full text-sm font-semibold mb-4">
+                The Movement
+              </div>
+              <h3 class="text-2xl font-bold text-gray-900 mb-4">Building the Network</h3>
+              <p class="text-gray-600 mb-4">
+                Today, Maxsys International operates a growing network of Tech Hubs across multiple communities, 
+                each staffed by verified Tech Stewards who combine technical expertise with genuine care for their neighbors.
+              </p>
+              <p class="text-gray-600">
+                Our platform has facilitated thousands of successful projects, from nonprofit website development to 
+                cybersecurity training for seniors, proving that local-first technology really works.
+              </p>
+            </div>
+            <div class="lg:col-span-1">
+              <img 
+                src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&fit=crop"
+                alt="Growing network"
+                class="rounded-2xl shadow-lg"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Leadership -->
     <section class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
-          <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Our Values</h2>
-          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
-            These principles guide every decision we make and every community we serve.
+          <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">Leadership Team</h2>
+          <p class="text-xl text-gray-600">
+            Experienced professionals committed to rebuilding technology infrastructure for communities.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div class="text-center">
+            <div class="w-32 h-32 bg-gradient-to-br from-primary-500 to-secondary-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+              <span class="text-white text-2xl font-bold">MC</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Maryanne Chiriboga</h3>
+            <p class="text-primary-600 font-medium mb-3">Founder & Executive Director</p>
+            <p class="text-gray-600 text-sm">
+              Passionate about leveraging technology to strengthen communities and create sustainable economic opportunities 
+              for skilled professionals.
+            </p>
+            <div class="mt-4">
+              <a href="mailto:info@maxsys.org" class="text-primary-600 hover:text-primary-700 transition-colors duration-200">
+                info@maxsys.org
+              </a>
+            </div>
+          </div>
+
+          <div class="text-center">
+            <div class="w-32 h-32 bg-gradient-to-br from-secondary-500 to-accent-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+              <span class="text-white text-2xl font-bold">TL</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Tech Lead</h3>
+            <p class="text-primary-600 font-medium mb-3">Platform Development</p>
+            <p class="text-gray-600 text-sm">
+              Leading the development of our community-focused platform and ensuring it serves both Tech Stewards 
+              and organizations effectively.
+            </p>
+          </div>
+
+          <div class="text-center">
+            <div class="w-32 h-32 bg-gradient-to-br from-accent-500 to-primary-500 rounded-full mx-auto mb-6 flex items-center justify-center">
+              <span class="text-white text-2xl font-bold">CO</span>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">Community Organizer</h3>
+            <p class="text-primary-600 font-medium mb-3">Hub Development</p>
+            <p class="text-gray-600 text-sm">
+              Building relationships with community organizations and establishing Tech Hubs in underserved areas 
+              across the country.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact Stats -->
+    <section class="py-20 bg-primary-600 text-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl lg:text-4xl font-bold mb-6">Our Impact So Far</h2>
+          <p class="text-xl text-primary-100">
+            Real numbers from real communities we've helped transform.
           </p>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div class="bg-white p-8 rounded-2xl text-center border border-gray-100 shadow-sm">
-            <div class="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
-            </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Community First</h3>
-            <p class="text-gray-600">We prioritize the needs and success of local communities in every project.</p>
+          <div class="text-center">
+            <div class="text-4xl font-bold mb-2">500+</div>
+            <div class="text-primary-200 text-sm">Verified Tech Stewards</div>
           </div>
-
-          <div class="bg-white p-8 rounded-2xl text-center border border-gray-100 shadow-sm">
-            <div class="w-16 h-16 bg-secondary-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-            </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Integrity & Trust</h3>
-            <p class="text-gray-600">We build trust through transparency, accountability, and ethical practices.</p>
+          <div class="text-center">
+            <div class="text-4xl font-bold mb-2">50+</div>
+            <div class="text-primary-200 text-sm">Communities Served</div>
           </div>
-
-          <div class="bg-white p-8 rounded-2xl text-center border border-gray-100 shadow-sm">
-            <!-- THIS IS THE MODIFIED SECTION -->
-            <div class="w-16 h-16 flex items-center justify-center mx-auto mb-6">
-              <!-- US Flag SVG -->
-              <svg class="w-16 h-16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="12" cy="12" r="10" fill="#fff" stroke="#E5E7EB" stroke-width="0.5"></circle>
-                <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2z" fill="#0A3161"></path>
-                <path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12h20z" fill="#E5E7EB"></path>
-                <path d="M2 12h20v2.857H2V12zm0 5.714h20v2.857H2v-2.857zM22 6.286H2V3.429c2.365-.77 5.01-1.286 7.857-1.428" fill="#B31942"></path>
-                <path d="M9.857 2v10H2c0-5.523 4.477-10 9.857-10z" fill="#E5E7EB"></path>
-                <path d="M9.857 2v10H2C2 6.477 5.523 2 9.857 2z" fill="#0A3161"></path>
-                <g fill="#E5E7EB">
-                    <path d="M4.5 3.5l.293.902h.95l-.768.558.292.902-.769-.558-.769.558.293-.902-.768-.558h.95L4.5 3.5zM7.5 3.5l.293.902h.95l-.768.558.292.902-.769-.558-.769.558.293-.902-.768-.558h.95L7.5 3.5zM6 5.5l.293.902h.95l-.768.558.292.902-.769-.558-.769.558.293-.902-.768-.558h.95L6 5.5zM4.5 7.5l.293.902h.95l-.768.558.292.902-.769-.558-.769.558.293-.902-.768-.558h.95L4.5 7.5zM7.5 7.5l.293.902h.95l-.768.558.292.902-.769-.558-.769.558.293-.902-.768-.558h.95L7.5 7.5z"></g>
-              </svg>
-            </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">American Made</h3>
-            <p class="text-gray-600">Our platform and services are proudly developed and operated in the USA.</p>
+          <div class="text-center">
+            <div class="text-4xl font-bold mb-2">2,500+</div>
+            <div class="text-primary-200 text-sm">Projects Completed</div>
           </div>
-          <!-- END OF MODIFIED SECTION -->
-
-          <div class="bg-white p-8 rounded-2xl text-center border border-gray-100 shadow-sm">
-            <div class="w-16 h-16 bg-accent-600 rounded-full flex items-center justify-center mx-auto mb-6">
-              <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-            </div>
-            <h3 class="text-xl font-semibold text-gray-900 mb-4">Empowerment</h3>
-            <p class="text-gray-600">We empower local talent and organizations with the tools they need to succeed.</p>
+          <div class="text-center">
+            <div class="text-4xl font-bold mb-2">$2.1M</div>
+            <div class="text-primary-200 text-sm">Earned by Local Professionals</div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Founder Section -->
-    <section class="py-20 bg-gray-50">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-          <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">Meet Our Founder</h2>
-          <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-12">
-            Maryanne Rozier Chiriboga, a U.S. Marine Corps veteran with decades of global technology and missionary experience, leads our mission with passion and purpose.
-          </p>
-          <img 
-            src="/images/maryanne-founder.jpeg" 
-            alt="Maryanne Rozier Chiriboga, Founder of MAXSYS.ORG"
-            class="w-48 h-48 rounded-full mx-auto object-cover shadow-xl border-4 border-white"
-            loading="lazy"
-            width="192"
-            height="192"
-          />
-          <blockquote class="max-w-3xl mx-auto mt-8 text-xl italic text-gray-700">
-            "The most impactful technology solutions are grounded in understanding, driven by compassion, and built to serve those who need them most."
-          </blockquote>
         </div>
       </div>
     </section>
   </main>
   <Footer />
+  <DonationBanner />
 </Layout>
