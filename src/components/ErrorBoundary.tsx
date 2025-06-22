@@ -1,31 +1,37 @@
-import React, { Component, ReactNode } from 'react';
+import React from 'react';
 
+// Define the type for the props, using React.ReactNode
 interface Props {
-  children: ReactNode;
-  fallback?: ReactNode;
+  children: React.ReactNode;
+  fallback?: React.ReactNode;
 }
 
+// Define the type for the state
 interface State {
   hasError: boolean;
   error?: Error;
 }
 
-class ErrorBoundary extends Component<Props, State> {
+// Correctly type the class component with Props and State
+class ErrorBoundary extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
   }
 
   static getDerivedStateFromError(error: Error): State {
+    // Update state so the next render will show the fallback UI.
     return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
+    // You can also log the error to an error reporting service
     console.error('Error caught by boundary:', error, errorInfo);
   }
 
   render() {
     if (this.state.hasError) {
+      // You can render any custom fallback UI
       return this.props.fallback || (
         <div className="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
           <div className="flex items-center mb-4">
@@ -35,7 +41,7 @@ class ErrorBoundary extends Component<Props, State> {
             <h3 className="text-lg font-semibold text-red-800">Something went wrong</h3>
           </div>
           <p className="text-red-600 mb-4">
-            We're sorry, but there was an error loading this component. Please try refreshing the page.
+            We're sorry, but there was an error loading the donation form. Please try refreshing the page.
           </p>
           <button 
             onClick={() => window.location.reload()} 
