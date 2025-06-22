@@ -46,27 +46,22 @@ export const POST: APIRoute = async ({ request }) => {
 
     // Prepare the donation payload for GiveWP
     const donationPayload = {
-      form_id: formId,
-      amount: amount,
-      donor: {
-        first_name: firstName,
-        last_name: lastName,
-        email: email
-      },
-      payment: {
-        gateway: 'stripe',
-        method: 'card',
-        stripe_payment_method_id: paymentMethodId
+      give_form_id: formId,
+      give_price: amount,
+      give_first: firstName,
+      give_last: lastName,
+      give_email: email,
+      payment_meta: {
+        stripe_payment_method: paymentMethodId
       }
     };
 
-    // Make request to GiveWP API
+    // Make request to GiveWP API with correct Basic authentication
     const giveWPResponse = await fetch(`${GIVEWP_URL}/wp-json/give-api/v2/donations`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${GIVEWP_API_TOKEN}`,
-        'X-WP-Nonce': GIVEWP_API_KEY
+        'Authorization': `Basic ${btoa(`${GIVEWP_API_KEY}:${GIVEWP_API_TOKEN}`)}`
       },
       body: JSON.stringify(donationPayload)
     });

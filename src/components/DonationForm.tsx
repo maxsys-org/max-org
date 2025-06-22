@@ -11,34 +11,21 @@ import ErrorBoundary from './ErrorBoundary';
 // Initialize Stripe
 const stripePromise = loadStripe(import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY || '');
 
-interface DonationFormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  amount: string;
-}
+// GiveWP Form ID - Update this with your actual form ID
+const GIVEWP_FORM_ID = '123';
 
 const DonationFormContent: React.FC = () => {
   const stripe = useStripe();
   const elements = useElements();
   
-  const [formData, setFormData] = useState<DonationFormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    amount: ''
-  });
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [amount, setAmount] = useState('');
   
   const [isProcessing, setIsProcessing] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const [donationComplete, setDonationComplete] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,13 +36,13 @@ const DonationFormContent: React.FC = () => {
     }
 
     // Validate form data
-    if (!formData.firstName || !formData.lastName || !formData.email || !formData.amount) {
+    if (!firstName || !lastName || !email || !amount) {
       setMessage({ type: 'error', text: 'Please fill in all required fields.' });
       return;
     }
 
-    const amount = parseFloat(formData.amount);
-    if (isNaN(amount) || amount < 1) {
+    const amountValue = parseFloat(amount);
+    if (isNaN(amountValue) || amountValue < 1) {
       setMessage({ type: 'error', text: 'Please enter a valid donation amount.' });
       return;
     }
@@ -69,8 +56,8 @@ const DonationFormContent: React.FC = () => {
         elements,
         params: {
           billing_details: {
-            name: `${formData.firstName} ${formData.lastName}`,
-            email: formData.email,
+            name: `${firstName} ${lastName}`,
+            email: email,
           },
         },
       });
@@ -88,11 +75,11 @@ const DonationFormContent: React.FC = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          formId: 1, // Default form ID - should be configurable
-          amount: amount,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
+          formId: GIVEWP_FORM_ID,
+          amount: amountValue,
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
           paymentMethodId: paymentMethod.id,
         }),
       });
@@ -100,16 +87,10 @@ const DonationFormContent: React.FC = () => {
       const result = await response.json();
 
       if (result.success) {
+        setDonationComplete(true);
         setMessage({ 
           type: 'success', 
           text: 'Thank you for your donation! Your support helps us build stronger communities through technology.' 
-        });
-        // Reset form
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          amount: ''
         });
       } else {
         setMessage({ 
@@ -128,6 +109,35 @@ const DonationFormContent: React.FC = () => {
     }
   };
 
+  if (donationComplete) {
+    return (
+      <div className="text-center py-8">
+        <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-6">
+          <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
+        <h3 className="text-2xl font-bold text-gray-900 mb-4">Thank You!</h3>
+        <p className="text-gray-600 mb-6">
+          Your donation has been processed successfully. You should receive a confirmation email shortly.
+        </p>
+        <button 
+          onClick={() => {
+            setDonationComplete(false);
+            setFirstName('');
+            setLastName('');
+            setEmail('');
+            setAmount('');
+            setMessage(null);
+          }}
+          className="bg-primary-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-primary-700 transition-colors duration-200"
+        >
+          Make Another Donation
+        </button>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -138,9 +148,8 @@ const DonationFormContent: React.FC = () => {
           <input
             type="text"
             id="firstName"
-            name="firstName"
-            value={formData.firstName}
-            onChange={handleInputChange}
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           />
@@ -152,9 +161,8 @@ const DonationFormContent: React.FC = () => {
           <input
             type="text"
             id="lastName"
-            name="lastName"
-            value={formData.lastName}
-            onChange={handleInputChange}
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           />
@@ -168,9 +176,8 @@ const DonationFormContent: React.FC = () => {
         <input
           type="email"
           id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleInputChange}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
         />
@@ -183,9 +190,8 @@ const DonationFormContent: React.FC = () => {
         <input
           type="number"
           id="amount"
-          name="amount"
-          value={formData.amount}
-          onChange={handleInputChange}
+          value={amount}
+          onChange={(e) => setAmount(e.target.value)}
           min="1"
           step="0.01"
           required

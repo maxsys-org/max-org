@@ -22,8 +22,19 @@ interface BlogPost {
 }
 
 let posts: BlogPost[] = [];
-let loading = true;
 let error = false;
+
+try {
+  const response = await fetch('https://give.maxsys.org/wp-json/wp/v2/posts?_embed&per_page=9');
+  if (response.ok) {
+    posts = await response.json();
+  } else {
+    error = true;
+  }
+} catch (e) {
+  console.error('Error fetching posts:', e);
+  error = true;
+}
 ---
 
 <Layout title="Insights - Maxsys International" description="Read the latest insights, stories, and updates from Maxsys International about community technology solutions and digital empowerment.">
@@ -44,160 +55,94 @@ let error = false;
     <!-- Blog Posts Section -->
     <section class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <!-- Loading State -->
-        <div id="loading-state" class="text-center py-12">
-          <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
-          <p class="mt-4 text-gray-600">Loading insights...</p>
-        </div>
-
-        <!-- Error State -->
-        <div id="error-state" class="text-center py-12 hidden">
-          <div class="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
-            <svg class="w-12 h-12 text-red-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5l-6.928-12c-.77-.833-2.694-.833-3.464 0l-6.928 12c-.77.833.192 2.5 1.732 2.5z"></path>
-            </svg>
-            <h3 class="text-lg font-semibold text-red-800 mb-2">Unable to Load Posts</h3>
-            <p class="text-red-600 mb-4">Could not load insights. Please try again later.</p>
-            <button onclick="loadPosts()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors duration-200">
-              Try Again
-            </button>
+        {error ? (
+          <!-- Error State -->
+          <div class="text-center py-12">
+            <div class="bg-red-50 border border-red-200 rounded-lg p-6 max-w-md mx-auto">
+              <svg class="w-12 h-12 text-red-600 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5l-6.928-12c-.77-.833-2.694-.833-3.464 0l-6.928 12c-.77.833.192 2.5 1.732 2.5z"></path>
+              </svg>
+              <h3 class="text-lg font-semibold text-red-800 mb-2">Unable to Load Posts</h3>
+              <p class="text-red-600 mb-4">Could not load insights. Please try again later.</p>
+            </div>
           </div>
-        </div>
+        ) : posts.length === 0 ? (
+          <!-- No Posts State -->
+          <div class="text-center py-12">
+            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6 max-w-md mx-auto">
+              <h3 class="text-lg font-semibold text-gray-800 mb-2">No Posts Available</h3>
+              <p class="text-gray-600">Check back soon for new insights and updates.</p>
+            </div>
+          </div>
+        ) : (
+          <!-- Posts Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post) => {
+              const featuredImage = post._embedded?.['wp:featuredmedia']?.[0];
+              const author = post._embedded?.author?.[0];
+              const date = new Date(post.date).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              });
 
-        <!-- Posts Grid -->
-        <div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 hidden">
-          <!-- Posts will be dynamically inserted here -->
-        </div>
+              // Clean up excerpt (remove HTML tags and truncate)
+              const excerpt = post.excerpt.rendered
+                .replace(/<[^>]*>/g, '')
+                .replace(/\[&hellip;\]/, '...')
+                .substring(0, 150) + '...';
+
+              return (
+                <article class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                  <a href={post.link} target="_blank" rel="noopener noreferrer" class="block">
+                    {featuredImage ? (
+                      <img 
+                        src={featuredImage.source_url} 
+                        alt={featuredImage.alt_text || post.title.rendered}
+                        class="w-full h-48 object-cover"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div class="w-full h-48 bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
+                        <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                        </svg>
+                      </div>
+                    )}
+                    
+                    <div class="p-6">
+                      <div class="flex items-center justify-between mb-3 text-sm text-gray-500">
+                        <span>{author?.name || 'Maxsys Team'}</span>
+                        <span>{date}</span>
+                      </div>
+                      
+                      <h3 class="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
+                        {post.title.rendered}
+                      </h3>
+                      
+                      <p class="text-gray-600 text-sm mb-4">
+                        {excerpt}
+                      </p>
+                      
+                      <div class="flex items-center text-primary-600 font-semibold text-sm">
+                        Read More
+                        <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                      </div>
+                    </div>
+                  </a>
+                </article>
+              );
+            })}
+          </div>
+        )}
       </div>
     </section>
   </main>
   <Footer />
   <DonationBanner />
 </Layout>
-
-<script>
-  interface BlogPost {
-    id: number;
-    title: { rendered: string };
-    excerpt: { rendered: string };
-    link: string;
-    date: string;
-    _embedded?: {
-      'wp:featuredmedia'?: Array<{
-        source_url: string;
-        alt_text: string;
-      }>;
-      author?: Array<{
-        name: string;
-      }>;
-    };
-  }
-
-  async function loadPosts() {
-    const loadingState = document.getElementById('loading-state');
-    const errorState = document.getElementById('error-state');
-    const postsGrid = document.getElementById('posts-grid');
-
-    if (!loadingState || !errorState || !postsGrid) return;
-
-    // Show loading state
-    loadingState.classList.remove('hidden');
-    errorState.classList.add('hidden');
-    postsGrid.classList.add('hidden');
-
-    try {
-      const response = await fetch('https://give.maxsys.org/wp-json/wp/v2/posts?_embed&per_page=9');
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const posts: BlogPost[] = await response.json();
-
-      // Hide loading state
-      loadingState.classList.add('hidden');
-
-      if (posts.length === 0) {
-        errorState.classList.remove('hidden');
-        return;
-      }
-
-      // Generate posts HTML
-      postsGrid.innerHTML = posts.map(post => {
-        const featuredImage = post._embedded?.['wp:featuredmedia']?.[0];
-        const author = post._embedded?.author?.[0];
-        const date = new Date(post.date).toLocaleDateString('en-US', {
-          year: 'numeric',
-          month: 'long',
-          day: 'numeric'
-        });
-
-        // Clean up excerpt (remove HTML tags and truncate)
-        const excerpt = post.excerpt.rendered
-          .replace(/<[^>]*>/g, '')
-          .replace(/\[&hellip;\]/, '...')
-          .substring(0, 150) + '...';
-
-        return `
-          <article class="bg-white border border-gray-200 rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-200">
-            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="block">
-              ${featuredImage ? `
-                <img 
-                  src="${featuredImage.source_url}" 
-                  alt="${featuredImage.alt_text || post.title.rendered}"
-                  class="w-full h-48 object-cover"
-                  loading="lazy"
-                />
-              ` : `
-                <div class="w-full h-48 bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center">
-                  <svg class="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
-                  </svg>
-                </div>
-              `}
-              
-              <div class="p-6">
-                <div class="flex items-center justify-between mb-3 text-sm text-gray-500">
-                  <span>${author?.name || 'Maxsys Team'}</span>
-                  <span>${date}</span>
-                </div>
-                
-                <h3 class="text-lg font-semibold text-gray-900 mb-3 line-clamp-2">
-                  ${post.title.rendered}
-                </h3>
-                
-                <p class="text-gray-600 text-sm mb-4">
-                  ${excerpt}
-                </p>
-                
-                <div class="flex items-center text-primary-600 font-semibold text-sm">
-                  Read More
-                  <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                  </svg>
-                </div>
-              </div>
-            </a>
-          </article>
-        `;
-      }).join('');
-
-      // Show posts grid
-      postsGrid.classList.remove('hidden');
-
-    } catch (error) {
-      console.error('Error loading posts:', error);
-      loadingState.classList.add('hidden');
-      errorState.classList.remove('hidden');
-    }
-  }
-
-  // Load posts when page loads
-  document.addEventListener('DOMContentLoaded', loadPosts);
-
-  // Make loadPosts available globally for retry button
-  (window as any).loadPosts = loadPosts;
-</script>
 
 <style>
   .line-clamp-2 {
