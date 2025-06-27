@@ -11,9 +11,59 @@ import DonationBanner from '../components/DonationBanner.astro';
   <main>
     <Hero />
     
-    <!-- Problem Statement -->
     <section class="py-20 bg-white">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
+            Our Commitment to Communities
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            These are the pillars of our mission, guiding every project we undertake and every life we touch.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          
+          <!-- Card 1: Community First -->
+          <div class="text-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+            <svg class="w-12 h-12 text-primary-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <h3 class="text-xl font-semibold mb-2">Community First</h3>
+            <p class="text-gray-600">
+              Local Tech Hubs staffed by verified professionals who live in your community and care about its success.
+            </p>
+          </div>
+
+          <!-- Card 2: Cybersecurity -->
+          <div class="text-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+            <svg class="w-12 h-12 text-primary-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            <h3 class="text-xl font-semibold mb-2">Cybersecurity</h3>
+            <p class="text-gray-600">
+              Protecting nonprofits and small businesses with affordable security solutions and proper data handling.
+            </p>
+          </div>
+
+          <!-- Card 3: Responsible Recycling -->
+          <div class="text-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+            <svg class="w-12 h-12 text-primary-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-3.04l4.4-7.923"/><path d="M12.5 13L17 5"/><path d="M12.5 13l-1.185 2.133a1.83 1.83 0 0 0 1.57 3.04H17"/><path d="m14 12-5 3"/><path d="M14 12l5-3"/><path d="M20 13h-2.185a1.83 1.83 0 0 0-1.57 3.04l-4.4 7.923"/><path d="M11.5 11L7 19"/><path d="M11.5 11l1.185-2.133a1.83 1.83 0 0 1-1.57-3.04H7"/></svg>
+            <h3 class="text-xl font-semibold mb-2">Responsible Recycling</h3>
+            <p class="text-gray-600">
+              Ensures devices are safely disposed of, preventing identity theft and environmental harm.
+            </p>
+          </div>
+
+          <!-- Card 4: Human Connection -->
+          <div class="text-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100">
+            <svg class="w-12 h-12 text-primary-600 mx-auto mb-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>
+            <h3 class="text-xl font-semibold mb-2">Human Connection</h3>
+            <p class="text-gray-600">
+              Building trust through personal relationships, not corporate call centers or overpriced contracts.
+            </p>
+          </div>
+        </div>
+      </div>
+
+<!-- Problem Statement -->
+      <div class="pt-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-16">
           <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
             The Problem Nobody's Talking About
@@ -56,7 +106,6 @@ import DonationBanner from '../components/DonationBanner.astro';
         </div>
       </div>
     </section>
-
     <!-- Solution -->
     <section class="py-20 bg-gray-50">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
