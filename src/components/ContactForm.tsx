@@ -82,19 +82,36 @@ const ContactForm: React.FC = () => {
     setSubmitMessage('');
 
     try {
-      // Create FormData object for CF7 with correct field names
+      // First, get the form configuration to get the correct unit tag
+      const formConfigResponse = await fetch('https://give.maxsys.org/wp-json/contact-form-7/v1/contact-forms/2927', {
+        method: 'GET',
+        mode: 'cors',
+        credentials: 'omit'
+      });
+
+      if (!formConfigResponse.ok) {
+        throw new Error('Failed to get form configuration');
+      }
+
+      const formConfig = await formConfigResponse.json();
+      console.log('Form config:', formConfig);
+
+      // Create FormData object with all required CF7 fields
       const formDataToSend = new FormData();
+      
+      // Add form fields
       formDataToSend.append('your-name', formData.name);
       formDataToSend.append('your-email', formData.email);
       formDataToSend.append('your-subject', formData.subject);
       formDataToSend.append('your-message', formData.message);
       
-      // Add required CF7 fields
+      // Add required CF7 system fields
       formDataToSend.append('_wpcf7', '2927');
-      formDataToSend.append('_wpcf7_version', '5.7.7');
+      formDataToSend.append('_wpcf7_version', '5.8');
       formDataToSend.append('_wpcf7_locale', 'en_US');
-      formDataToSend.append('_wpcf7_unit_tag', 'wpcf7-f2927-p1-o1');
+      formDataToSend.append('_wpcf7_unit_tag', 'wpcf7-f2927-o1');
       formDataToSend.append('_wpcf7_container_post', '0');
+      formDataToSend.append('_wpcf7_posted_data_hash', '');
 
       console.log('Submitting form data:', Object.fromEntries(formDataToSend));
 
