@@ -82,22 +82,34 @@ const ContactForm: React.FC = () => {
     setSubmitMessage('');
 
     try {
-      // Create FormData object for CF7
+      // Create FormData object for CF7 with correct field names
       const formDataToSend = new FormData();
       formDataToSend.append('your-name', formData.name);
       formDataToSend.append('your-email', formData.email);
       formDataToSend.append('your-subject', formData.subject);
       formDataToSend.append('your-message', formData.message);
+      
+      // Add required CF7 fields
+      formDataToSend.append('_wpcf7', '2927');
+      formDataToSend.append('_wpcf7_version', '5.7.7');
+      formDataToSend.append('_wpcf7_locale', 'en_US');
+      formDataToSend.append('_wpcf7_unit_tag', 'wpcf7-f2927-p1-o1');
+      formDataToSend.append('_wpcf7_container_post', '0');
 
-      const response = await fetch('https://give.maxsys.org/wp-json/contact-form-7/v1/contact-forms/c971a18/feedback', {
+      console.log('Submitting form data:', Object.fromEntries(formDataToSend));
+
+      const response = await fetch('https://give.maxsys.org/wp-json/contact-form-7/v1/contact-forms/2927/feedback', {
         method: 'POST',
         body: formDataToSend,
-        headers: {
-          // Don't set Content-Type header when using FormData - browser will set it automatically with boundary
-        }
+        mode: 'cors',
+        credentials: 'omit'
       });
 
+      console.log('Response status:', response.status);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
       const result = await response.json();
+      console.log('Response data:', result);
 
       if (result.status === 'mail_sent') {
         setSubmitStatus('success');
@@ -129,7 +141,14 @@ const ContactForm: React.FC = () => {
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitStatus('error');
-      setSubmitMessage('There was a network error. Please check your connection and try again.');
+      
+      if (error instanceof TypeError && error.message.includes('CORS')) {
+        setSubmitMessage('Unable to send message due to security restrictions. Please contact us directly at info@maxsys.org or try again later.');
+      } else if (error instanceof TypeError && error.message.includes('Failed to fetch')) {
+        setSubmitMessage('Network error. Please check your internet connection and try again.');
+      } else {
+        setSubmitMessage('There was an unexpected error. Please try again or contact us directly at info@maxsys.org.');
+      }
     } finally {
       setIsSubmitting(false);
     }
